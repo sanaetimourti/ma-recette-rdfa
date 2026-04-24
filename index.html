@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recette : Tajine de poulet aux olives</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #c0392b;
+            --secondary: #e67e22;
+            --accent: #f39c12;
+            --green: #27ae60;
+            --bg: #faf7f2;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --text-light: #5a6c7d;
+            --border: #eddcc9;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            --radius: 16px;
+            --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fdf6ec 0%, #faf7f2 30%, #fdf2e9 60%, #faf7f2 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: var(--text);
+            line-height: 1.7;
+            padding: 20px;
+        }
+
+        /* Conteneur principal */
+        .recipe-card {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 40px 45px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Bandeau décoratif en haut */
+        .recipe-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        /* Badge "Recette" */
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 10px 0 12px 0;
+            line-height: 1.3;
+            letter-spacing: -0.5px;
+        }
+
+        .description {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            margin-bottom: 18px;
+            font-style: italic;
+            border-left: 3px solid var(--secondary);
+            padding-left: 15px;
+        }
+
+        /* Auteur et date */
+        .author-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        .author-row .author-name {
+            font-weight: 600;
+            color: var(--text);
+        }
+        .author-row .dot {
+            width: 4px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 50%;
+        }
+        .author-row .date {
+            color: var(--text-light);
+        }
+
+        /* Image */
+        .image-wrapper {
+            position: relative;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        .image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        .image-wrapper:hover img {
+            transform: scale(1.03);
+        }
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.6));
+            color: #fff;
+            padding: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* Titres de section */
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin: 35px 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 i {
+            font-size: 1.2rem;
+            color: var(--accent);
+            background: #fff8eb;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        /* Carte infos */
+        .meta-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            background: linear-gradient(135deg, #fff9f0, #fff5e6);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+        .meta-item {
+            text-align: center;
+            padding: 8px;
+        }
+        .meta-item .meta-icon {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+        .meta-item .meta-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+        }
+        .meta-item .meta-value {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        /* Note */
+        .rating-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #fffdf7;
+            border: 1px solid #ffe0a3;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .rating-stars {
+            color: #f39c12;
+            font-size: 1.3rem;
+            letter-spacing: 3px;
+        }
+        .rating-score {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .rating-count {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Nutrition */
+        .nutrition-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #e8f8ef;
+            color: var(--green);
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        .nutrition-badge i {
+            font-size: 1rem;
+        }
+
+        /* Ingrédients */
+        ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 10px;
+            background: #fdfaf6;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        ul li {
+            padding: 10px 15px;
+            background: #fff;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+        ul li:hover {
+            background: #fff9f0;
+            transform: translateX(4px);
+        }
+        ul li::before {
+            content: '•';
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        /* Instructions */
+        ol {
+            list-style: none;
+            padding: 0;
+            counter-reset: step-counter;
+        }
+        ol li {
+            counter-increment: step-counter;
+            display: flex;
+            gap: 15px;
+            margin-bottom: 18px;
+            padding: 18px 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: var(--transition);
+            align-items: flex-start;
+        }
+        ol li:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+        ol li::before {
+            content: counter(step-counter);
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* Avis */
+        .review {
+            background: #fdfdfd;
+            border: 1px solid #eaeaea;
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin: 15px 0;
+            transition: var(--transition);
+        }
+        .review:hover {
+            border-color: #fad390;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .review-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fad390, #f6e58d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #8b6914;
+            font-size: 1.1rem;
+        }
+        .review-author {
+            font-weight: 600;
+            color: var(--text);
+        }
+        .review-stars {
+            color: #f39c12;
+            font-size: 0.9rem;
+            margin: 5px 0;
+        }
+        .review-body {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        /* Pied de page */
+        .footer-note {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .recipe-card {
+                padding: 25px 20px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            ul {
+                grid-template-columns: 1fr;
+            }
+            .meta-info {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Animation d'entrée */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .recipe-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="recipe-card" vocab="https://schema.org/" typeof="Recipe">
+
+    <!-- Badge -->
+    <span class="badge"><i class="fa-solid fa-utensils"></i> Recette traditionnelle</span>
+
+    <!-- Titre -->
+    <h1 property="name">Tajine de poulet aux olives</h1>
+
+    <!-- Description -->
+    <p class="description" property="description">
+        Un plat traditionnel marocain savoureux, alliant le poulet tendre 
+        aux olives et aux épices parfumées.
+    </p>
+
+    <!-- Auteur et date -->
+    <div class="author-row">
+        <i class="fa-solid fa-user-circle" style="color: var(--secondary); font-size: 1.1rem;"></i>
+        <span class="author-name" property="author" typeof="Person">
+            <span property="name">Timourti Sana</span>
+        </span>
+        <span class="dot"></span>
+        <i class="fa-regular fa-calendar" style="color: var(--secondary);"></i>
+        <span class="date">
+            <time property="datePublished" datetime="2023-11-15">24 avril 2026</time>
+        </span>
+    </div>
+
+    <!-- Image -->
+    <div class="image-wrapper">
+        <img property="image" src="images/recette-tajine-poulet-olive-scaled.jpg" 
+             alt="Tajine de poulet aux olives marocain" />
+        <div class="image-overlay">
+            <i class="fa-solid fa-camera"></i> Tajine traditionnel marocain
+        </div>
+    </div>
+
+    <!-- Section Informations -->
+    <h2><i class="fa-solid fa-circle-info"></i> Informations</h2>
+    <div class="meta-info">
+        <div class="meta-item">
+            <div class="meta-icon"><i class="fa-regular fa-clock"></i></div>
+            <div class="meta-label">Préparation</div>
+            <div class="meta-value">20 min</div>
+            <meta property="prepTime" content="PT20M">
+        </div>
+        <div class="meta-item">
+            <div class="meta-icon"><i class="fa-solid fa-fire-burner"></i></div>
+            <div class="meta-label">Cuisson</div>
+            <div class="meta-value">1 heure</div>
+            <meta property="cookTime" content="PT1H">
+        </div>
+        <div class="meta-item">
+            <div class="meta-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+            <div class="meta-label">Total</div>
+            <div class="meta-value">1h20</div>
+            <meta property="totalTime" content="PT1H20M">
+        </div>
+        <div class="meta-item">
+            <div class="meta-icon"><i class="fa-solid fa-tag"></i></div>
+            <div class="meta-label">Catégorie</div>
+            <div class="meta-value"><span property="recipeCategory">Plat principal</span></div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-icon"><i class="fa-solid fa-globe"></i></div>
+            <div class="meta-label">Cuisine</div>
+            <div class="meta-value"><span property="recipeCuisine">Marocaine</span></div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-icon"><i class="fa-solid fa-people-group"></i></div>
+            <div class="meta-label">Portions</div>
+            <div class="meta-value"><span property="recipeYield">4 personnes</span></div>
+        </div>
+    </div>
+
+    <!-- Note -->
+    <div class="rating-box" property="aggregateRating" typeof="AggregateRating">
+        <div class="rating-stars">★★★★★</div>
+        <div>
+            <span class="rating-score" property="ratingValue">4.7</span>
+            <span style="font-size: 1.2rem; color: #666;">/ 5</span>
+        </div>
+        <span class="rating-count">
+            (<span property="reviewCount">124</span> avis)
+        </span>
+    </div>
+
+    <!-- Nutrition -->
+    <div class="nutrition-badge" property="nutrition" typeof="NutritionInformation">
+        <i class="fa-solid fa-leaf"></i>
+        <span property="calories">420 kcal</span> par portion
+    </div>
+
+    <!-- Ingrédients -->
+    <h2><i class="fa-solid fa-basket-shopping"></i> Ingrédients</h2>
+    <ul>
+        <li property="recipeIngredient">4 cuisses de poulet</li>
+        <li property="recipeIngredient">200g d'olives vertes</li>
+        <li property="recipeIngredient">2 oignons émincés</li>
+        <li property="recipeIngredient">2 gousses d'ail</li>
+        <li property="recipeIngredient">1 citron confit</li>
+        <li property="recipeIngredient">2 c. à soupe d'huile d'olive</li>
+        <li property="recipeIngredient">1 c. à café de gingembre</li>
+        <li property="recipeIngredient">1 c. à café de curcuma</li>
+        <li property="recipeIngredient">1 pincée de safran</li>
+        <li property="recipeIngredient">Coriandre fraîche</li>
+        <li property="recipeIngredient">Sel et poivre</li>
+    </ul>
+
+    <!-- Préparation -->
+    <h2><i class="fa-solid fa-list-ol"></i> Préparation</h2>
+    <ol property="recipeInstructions" typeof="ItemList">
+        <li property="itemListElement" typeof="HowToStep">
+            <span property="text">Dans une cocotte, faire dorer les cuisses de poulet dans l'huile d'olive.</span>
+        </li>
+        <li property="itemListElement" typeof="HowToStep">
+            <span property="text">Ajouter les oignons émincés, l'ail, les épices (gingembre, curcuma, safran), sel et poivre. Mélanger et laisser revenir 5 minutes.</span>
+        </li>
+        <li property="itemListElement" typeof="HowToStep">
+            <span property="text">Couvrir d'eau à hauteur, ajouter le citron confit coupé en quartiers. Laisser mijoter 45 minutes à feu doux.</span>
+        </li>
+        <li property="itemListElement" typeof="HowToStep">
+            <span property="text">Ajouter les olives vertes et poursuivre la cuisson 15 minutes.</span>
+        </li>
+        <li property="itemListElement" typeof="HowToStep">
+            <span property="text">Parsemer de coriandre fraîche et servir chaud avec du pain marocain.</span>
+        </li>
+    </ol>
+
+    <!-- Avis -->
+    <h2><i class="fa-solid fa-comment-dots"></i> Avis des internautes</h2>
+
+    <div class="review" property="review" typeof="Review">
+        <div class="review-header">
+            <div class="review-avatar">A</div>
+            <span class="review-author" property="author" typeof="Person">
+                <span property="name">Ahmed R.</span>
+            </span>
+        </div>
+        <div class="review-stars" property="reviewRating" typeof="Rating">
+            ★★★★★ <span property="ratingValue" style="font-weight: 600;">5</span>/5
+        </div>
+        <p class="review-body" property="reviewBody">
+            " Délicieux tajine, recette authentique comme à Marrakech ! "
+        </p>
+    </div>
+
+    <div class="review" property="review" typeof="Review">
+        <div class="review-header">
+            <div class="review-avatar">S</div>
+            <span class="review-author" property="author" typeof="Person">
+                <span property="name"> M. Amina</span>
+            </span>
+        </div>
+        <div class="review-stars" property="reviewRating" typeof="Rating">
+            ★★★★☆ <span property="ratingValue" style="font-weight: 600;">4</span>/5
+        </div>
+        <p class="review-body" property="reviewBody">
+            " Très bon, j'ai ajouté un peu de citron supplémentaire. "
+        </p>
+    </div>
+
+    <!-- Pied de page -->
+    <div class="footer-note">
+        <i class="fa-regular fa-heart" style="color: #c0392b;"></i> 
+        Recette annotée avec RDFa &amp; Schema.org — Projet Web Sémantique 2026
+    </div>
+
+</div>
+
+</body>
+</html>
